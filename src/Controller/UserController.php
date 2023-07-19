@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,7 @@ class UserController extends AbstractController
             $user->setPassword($password);
 
             $entityManager->persist($user);
+            dd($entityManager);
             $entityManager->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");

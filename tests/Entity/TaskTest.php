@@ -7,9 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
-    public function testDefault()
+    public function testTaskEntityInit(): void
     {
         $task = new Task();
+
+        $this->assertIsObject($task);
+
         $task->setTitle('test title');
         $task->setContent('test content');
 
@@ -18,21 +21,27 @@ class TaskTest extends TestCase
         $this->assertSame('test content', $task->getContent());
 
         $this->assertNotEmpty($task->getCreatedAt());
+        $this->assertIsBool($task->isDone());
         $this->assertFalse($task->isDone());
     }
 
-    public function testToggle()
+    public function testToggle(): void
     {
         $task = new Task();
 
+        $this->assertIsObject($task);
+
+        $this->assertIsBool($task->isDone());
         $this->assertFalse($task->isDone());
 
         $task->toggle();
 
+        $this->assertIsBool($task->isDone());
         $this->assertTrue($task->isDone());
 
         $task->toggle();
         
+        $this->assertIsBool($task->isDone());
         $this->assertFalse($task->isDone());
     }
 }

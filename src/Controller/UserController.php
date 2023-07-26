@@ -16,7 +16,7 @@ class UserController extends AbstractController
     #[Route('/users', name: 'user_list')]
     public function listAction(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/list.html.twig', [
             'users' => $entityManager->getRepository(User::class)->findAll(),
         ]);
     }
@@ -36,7 +36,6 @@ class UserController extends AbstractController
             $user->setPassword($password);
 
             $entityManager->persist($user);
-            dd($entityManager);
             $entityManager->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");

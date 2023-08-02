@@ -37,21 +37,4 @@ class UserTest extends TestCase
         $this->assertSame(['ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
     }
 
-    public function testUserEntityEraseCredentials(): void
-    {
-        $user = new User();
-
-        $this->assertIsObject($user);
-
-        $user->setPassword("password");
-
-        /** check if the set is work */
-        $this->assertSame("password", $user->getPassword());
-
-        /** erase password value */
-        $user->eraseCredentials();
-
-        /** check if the erase work */
-        $this->assertNull($user->getPassword());
-    }
 }

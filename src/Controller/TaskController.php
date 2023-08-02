@@ -20,7 +20,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/taks/create', name: 'task_create')]
+    #[Route('/tasks/create', name: 'task_create')]
     public function createAction(EntityManagerInterface $entityManager, Request $request): Response
     {
         $task = new Task();

@@ -38,12 +38,13 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/tasks/create');
 
         $form = $crawler->selectButton('Ajouter')->form([
-            'title' => 'une task',
-            'content' => 'test'
+            'task[title]' => 'une task',
+            'task[content]' => 'test'
         ]);
 
         $this->client->submit($form);
         $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
         $this->assertSelectorExists('.alert.alert-success');
     }
 
@@ -58,16 +59,16 @@ class TaskControllerTest extends WebTestCase
 
     public function testSuccessEditTask(): void
     {
-        
         $crawler = $this->client->request('GET', '/tasks/2/edit');
         
         $form = $crawler->selectButton('Modifier')->form([
-            'title' => 'une task edited',
-            'content' => 'test edit'
+            'task[title]' => 'une task edited',
+            'task[content]' => 'test edit'
         ]);
         
         $this->client->submit($form);
         $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
         $this->assertSelectorExists('.alert.alert-success');
         
         $taksRepository = static::getContainer()->get(TaskRepository::class);
@@ -84,6 +85,7 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', '/tasks/2/delete');
 
         $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
         $this->assertSelectorExists('.alert.alert-success');
     }
 
@@ -133,6 +135,7 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', '/tasks/2/edit');
         
         $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
         $this->assertSelectorExists('.alert.alert-success');
         
         $taksRepository = static::getContainer()->get(TaskRepository::class);

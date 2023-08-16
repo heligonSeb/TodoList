@@ -45,8 +45,8 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('Sign in')->form([
-            'username' => 'seb',
-            'password' => 'seb'
+            'username' => 'user0',
+            'password' => 'password'
         ]);
         $this->client->submit($form);
         $this->assertResponseRedirects('/');
@@ -57,7 +57,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $userRepository = static::getContainer()->get(UserRepository::class);
 
-        $testUser = $userRepository->findOneByEmail('seb@seb.seb');
+        $testUser = $userRepository->findOneByEmail('user1@domain.fr');
 
         $this->client->loginUser($testUser);
 

@@ -38,8 +38,8 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/tasks/create');
 
         $form = $crawler->selectButton('Ajouter')->form([
-            'task[title]' => 'une task',
-            'task[content]' => 'test'
+            'task[title]' => 'task10',
+            'task[content]' => 'content10'
         ]);
 
         $this->client->submit($form);
@@ -62,8 +62,8 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/tasks/2/edit');
         
         $form = $crawler->selectButton('Modifier')->form([
-            'task[title]' => 'une task edited',
-            'task[content]' => 'test edit'
+            'task[title]' => 'task11',
+            'task[content]' => 'content11'
         ]);
         
         $this->client->submit($form);
@@ -76,8 +76,8 @@ class TaskControllerTest extends WebTestCase
         $task = $taksRepository->find(2);
 
         $this->assertNotNull($task->getId());
-        $this->assertSame("une task edited", $task->getTitle());
-        $this->assertSame("test edit", $task->getContent());
+        $this->assertSame("task11", $task->getTitle());
+        $this->assertSame("content11", $task->getContent());
     }
 
     public function testDisplayDeleteTask(): void
@@ -89,33 +89,33 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert.alert-success');
     }
 
-    public function testToggleTaskAction(): void
+    public function testToggleTask(): void
     {
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(4);
 
         $this->assertIsObject($task);
 
         $this->assertIsBool($task->isDone());
         $this->assertFalse($task->isDone());
 
-        $this->client->request('GET', '/tasks/2/toggle');
+        $this->client->request('GET', '/tasks/4/toggle');
 
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(4);
 
         $this->assertIsObject($task);
 
         $this->assertIsBool($task->isDone());
         $this->assertTrue($task->isDone());
 
-        $this->client->request('GET', '/tasks/2/toggle');
+        $this->client->request('GET', '/tasks/4/toggle');
 
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(4);
 
         $this->assertIsObject($task);
 

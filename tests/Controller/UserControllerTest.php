@@ -43,7 +43,7 @@ class UserControllerTest extends WebTestCase
         ]);
 
         $this->client->submit($form);
-        $this->assertResponseRedirects('/users');
+        $this->assertResponseRedirects("/users");
         $this->client->followRedirect();
         $this->assertSelectorExists('.alert.alert-success');
     }

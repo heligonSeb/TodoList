@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/users', name: 'user_list')]
-    public function listAction(EntityManagerInterface $entityManager): Response
+    public function list(EntityManagerInterface $entityManager): Response
     {
         return $this->render('user/list.html.twig', [
             'users' => $entityManager->getRepository(User::class)->findAll(),
@@ -23,7 +23,7 @@ class UserController extends AbstractController
 
 
     #[Route('/users/create', name: 'user_create')]
-    public function createAction(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher)
+    public function create(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -50,7 +50,7 @@ class UserController extends AbstractController
      * @Route("/users/{id}/edit", name="user_edit")
      */
     #[Route('/users/{id}/edit', name: 'user_edit')]
-    public function editAction(User $user, Request $request,UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager)
+    public function edit(User $user, Request $request,UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(UserType::class, $user);
 

@@ -127,12 +127,12 @@ class TaskControllerTest extends WebTestCase
     {
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(3);
 
         $this->assertIsObject($task);
         $this->assertNotNull($task->getId());
         
-        $this->client->request('GET', '/tasks/2/edit');
+        $this->client->request('GET', '/tasks/3/delete');
         
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
@@ -140,7 +140,7 @@ class TaskControllerTest extends WebTestCase
         
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(3);
 
         $this->assertNull($task);
     }

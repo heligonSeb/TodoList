@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TaskController extends AbstractController
 {
     #[Route('/tasks', name: 'task_list')]
-    public function listAction(EntityManagerInterface $entityManager): Response
+    public function list(EntityManagerInterface $entityManager): Response
     {
         return $this->render('task/list.html.twig', [
             'tasks' => $entityManager->getRepository(Task::class)->findAll(),
@@ -21,7 +21,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/create', name: 'task_create')]
-    public function createAction(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -44,7 +44,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
-    public function editAction(Task $task, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(Task $task, EntityManagerInterface $entityManager, Request $request): Response
     {
         $form = $this->createForm(TaskType::class, $task);
 
@@ -65,7 +65,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
-    public function toggleTaskAction(Task $task, EntityManagerInterface $entityManager): Response
+    public function toggleTask(Task $task, EntityManagerInterface $entityManager): Response
     {
         $task->toggle();
         $entityManager->flush();
@@ -76,7 +76,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
-    public function deleteTaskAction(Task $task, EntityManagerInterface $entityManager): Response
+    public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($task);
         $entityManager->flush();

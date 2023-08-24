@@ -2,17 +2,26 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\TaskFixtures;
 use App\Repository\TaskRepository;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends WebTestCase
 {
+    /** 
+     * @var AbstractDatabaseTool 
+     */
+    protected $databaseTool;
+
     private $client = null;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     public function testDisplayTask(): void
@@ -50,6 +59,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDisplayEditTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $this->client->request('GET', '/tasks/2/edit');
 
         $this->assertResponseIsSuccessful();
@@ -59,6 +70,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testSuccessEditTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $crawler = $this->client->request('GET', '/tasks/2/edit');
         
         $form = $crawler->selectButton('Modifier')->form([
@@ -82,6 +95,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDisplayDeleteTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $this->client->request('GET', '/tasks/2/delete');
 
         $this->assertResponseRedirects('/tasks');
@@ -91,6 +106,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testToggleTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
         $task = $taksRepository->find(4);
@@ -125,6 +142,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testSuccessDeleteTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+        
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
         $task = $taksRepository->find(3);

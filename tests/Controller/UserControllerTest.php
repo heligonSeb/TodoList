@@ -2,20 +2,31 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 class UserControllerTest extends WebTestCase
 {
+    /** 
+     * @var AbstractDatabaseTool 
+     */
+    protected $databaseTool;
+
     private $client = null;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     public function testDisplayUser(): void
     {
+        
         $this->client->request('GET', '/users');
 
         $this->assertResponseIsSuccessful();
@@ -33,12 +44,13 @@ class UserControllerTest extends WebTestCase
     }
 
     public function testSuccessCreateUser(): void
-    {
+    {     
         $crawler = $this->client->request('GET', '/users/create');
 
         $form = $crawler->selectButton('Ajouter')->form([
             'user[username]' => 'user11',
             'user[password][first]' => 'password',
+            'user[password][second]' => 'password',
             'user[email]' => 'user11@domain.fr'
         ]);
 
@@ -50,6 +62,8 @@ class UserControllerTest extends WebTestCase
 
     public function testDisplayEditUser(): void
     {
+        $this->databaseTool->loadFixtures([UserFixtures::class]);
+        
         $this->client->request('GET', '/users/1/edit');
 
         $this->assertResponseIsSuccessful();
@@ -59,11 +73,14 @@ class UserControllerTest extends WebTestCase
 
     public function testSuccessEditUser(): void
     {
+        $this->databaseTool->loadFixtures([UserFixtures::class]);
+
         $crawler = $this->client->request('GET', '/users/2/edit');
         
         $form = $crawler->selectButton('Modifier')->form([
             'user[username]' => 'user11',
             'user[password][first]' => 'password',
+            'user[password][second]' => 'password',
             'user[email]' => 'user11@domain.fr'
         ]);
         

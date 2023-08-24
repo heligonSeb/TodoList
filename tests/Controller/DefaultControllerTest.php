@@ -7,11 +7,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultControllerTest extends WebTestCase
 {
+    private $client = null;
+
+    public function setUp(): void
+    {
+        $this->client = static::createClient();
+    }
+
     public function testHomepage(): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/');
+        $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -19,9 +24,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testH1HomePage(): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/');
+        $this->client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");

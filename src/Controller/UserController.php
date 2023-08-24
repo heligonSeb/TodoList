@@ -29,20 +29,19 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
-
             $password = $passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($password);
-
+            
             $entityManager->persist($user);
             $entityManager->flush();
-
+            
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-
+            
             return $this->redirectToRoute('user_list');
         }
-
+        
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 

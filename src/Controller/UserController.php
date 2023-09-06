@@ -23,7 +23,7 @@ class UserController extends AbstractController
 
 
     #[Route('/users/create', name: 'user_create')]
-    public function create(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher)
+    public function create(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -49,7 +49,7 @@ class UserController extends AbstractController
      * @Route("/users/{id}/edit", name="user_edit")
      */
     #[Route('/users/{id}/edit', name: 'user_edit')]
-    public function edit(User $user, Request $request,UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager)
+    public function edit(User $user, Request $request,UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);
 

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TaskController extends AbstractController
 {
@@ -29,6 +30,9 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $task->setUser($user);
+
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -44,8 +48,11 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
+    #[isGranted('EDIT', 'task', "La task n'a pas été trouvée", 404)]
     public function edit(Task $task, EntityManagerInterface $entityManager, Request $request): Response
     {
+        // $this->denyAccessUnlessGranted('EDIT', $task);
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -53,7 +60,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'La tâche a bien été modifiée');
+            $this->addFlash('success', 'La tâche %s a bien été modifiée');
 
             return $this->redirectToRoute('task_list');
         }
@@ -76,6 +83,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
+    #[isGranted('DELETE', 'task', "La task n'a pas été trouvée", 404)]
     public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($task);

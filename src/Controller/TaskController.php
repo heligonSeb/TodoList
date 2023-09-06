@@ -9,11 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TaskController extends AbstractController
 {
     #[Route('/tasks', name: 'task_list')]
-    public function listAction(EntityManagerInterface $entityManager): Response
+    public function list(EntityManagerInterface $entityManager): Response
     {
         return $this->render('task/list.html.twig', [
             'tasks' => $entityManager->getRepository(Task::class)->findAll(),
@@ -21,7 +22,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/create', name: 'task_create')]
-    public function createAction(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -29,6 +30,9 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $task->setUser($user);
+
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -44,8 +48,11 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
-    public function editAction(Task $task, EntityManagerInterface $entityManager, Request $request): Response
+    #[isGranted('EDIT', 'task', "La task n'a pas été trouvée", 404)]
+    public function edit(Task $task, EntityManagerInterface $entityManager, Request $request): Response
     {
+        // $this->denyAccessUnlessGranted('EDIT', $task);
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -53,7 +60,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'La tâche a bien été modifiée');
+            $this->addFlash('success', 'La tâche %s a bien été modifiée');
 
             return $this->redirectToRoute('task_list');
         }
@@ -65,7 +72,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
-    public function toggleTaskAction(Task $task, EntityManagerInterface $entityManager): Response
+    public function toggleTask(Task $task, EntityManagerInterface $entityManager): Response
     {
         $task->toggle();
         $entityManager->flush();
@@ -76,7 +83,8 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
-    public function deleteTaskAction(Task $task, EntityManagerInterface $entityManager): Response
+    #[isGranted('DELETE', 'task', "La task n'a pas été trouvée", 404)]
+    public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($task);
         $entityManager->flush();

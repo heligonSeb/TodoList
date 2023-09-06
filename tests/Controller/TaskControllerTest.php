@@ -2,17 +2,26 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\TaskFixtures;
 use App\Repository\TaskRepository;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends WebTestCase
 {
+    /** 
+     * @var AbstractDatabaseTool 
+     */
+    protected $databaseTool;
+
     private $client = null;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     public function testDisplayTask(): void
@@ -38,8 +47,8 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/tasks/create');
 
         $form = $crawler->selectButton('Ajouter')->form([
-            'task[title]' => 'une task',
-            'task[content]' => 'test'
+            'task[title]' => 'task10',
+            'task[content]' => 'content10'
         ]);
 
         $this->client->submit($form);
@@ -50,6 +59,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDisplayEditTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $this->client->request('GET', '/tasks/2/edit');
 
         $this->assertResponseIsSuccessful();
@@ -59,11 +70,13 @@ class TaskControllerTest extends WebTestCase
 
     public function testSuccessEditTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $crawler = $this->client->request('GET', '/tasks/2/edit');
         
         $form = $crawler->selectButton('Modifier')->form([
-            'task[title]' => 'une task edited',
-            'task[content]' => 'test edit'
+            'task[title]' => 'task11',
+            'task[content]' => 'content11'
         ]);
         
         $this->client->submit($form);
@@ -76,12 +89,14 @@ class TaskControllerTest extends WebTestCase
         $task = $taksRepository->find(2);
 
         $this->assertNotNull($task->getId());
-        $this->assertSame("une task edited", $task->getTitle());
-        $this->assertSame("test edit", $task->getContent());
+        $this->assertSame("task11", $task->getTitle());
+        $this->assertSame("content11", $task->getContent());
     }
 
     public function testDisplayDeleteTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $this->client->request('GET', '/tasks/2/delete');
 
         $this->assertResponseRedirects('/tasks');
@@ -89,33 +104,35 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert.alert-success');
     }
 
-    public function testToggleTaskAction(): void
+    public function testToggleTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(4);
 
         $this->assertIsObject($task);
 
         $this->assertIsBool($task->isDone());
         $this->assertFalse($task->isDone());
 
-        $this->client->request('GET', '/tasks/2/toggle');
+        $this->client->request('GET', '/tasks/4/toggle');
 
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(4);
 
         $this->assertIsObject($task);
 
         $this->assertIsBool($task->isDone());
         $this->assertTrue($task->isDone());
 
-        $this->client->request('GET', '/tasks/2/toggle');
+        $this->client->request('GET', '/tasks/4/toggle');
 
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(4);
 
         $this->assertIsObject($task);
 
@@ -125,14 +142,16 @@ class TaskControllerTest extends WebTestCase
 
     public function testSuccessDeleteTask(): void
     {
+        $this->databaseTool->loadFixtures([TaskFixtures::class]);
+        
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(3);
 
         $this->assertIsObject($task);
         $this->assertNotNull($task->getId());
         
-        $this->client->request('GET', '/tasks/2/edit');
+        $this->client->request('GET', '/tasks/3/delete');
         
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
@@ -140,7 +159,7 @@ class TaskControllerTest extends WebTestCase
         
         $taksRepository = static::getContainer()->get(TaskRepository::class);
 
-        $task = $taksRepository->find(2);
+        $task = $taksRepository->find(3);
 
         $this->assertNull($task);
     }

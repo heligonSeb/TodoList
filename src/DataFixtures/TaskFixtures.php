@@ -14,8 +14,10 @@ class TaskFixtures extends Fixture
             $task = new Task();
             $task->setTitle("task$i");
             $task->setContent("content$i");
+            $task->setUser(null);
             $manager->persist($task);
         }
+
 
         $manager->flush();
     }

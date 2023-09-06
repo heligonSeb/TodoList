@@ -2,17 +2,26 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends WebTestCase 
 {
+    /** 
+     * @var AbstractDatabaseTool 
+     */
+    protected $databaseTool;
+
     private $client = null;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     public function testDisplayLogin(): void
@@ -45,8 +54,8 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('Sign in')->form([
-            'username' => 'seb',
-            'password' => 'seb'
+            'username' => 'user0',
+            'password' => 'password'
         ]);
         $this->client->submit($form);
         $this->assertResponseRedirects('/');
@@ -55,9 +64,11 @@ class SecurityControllerTest extends WebTestCase
 
     public function testSuccessfullLogin(): void 
     {
+        $this->databaseTool->loadFixtures([UserFixtures::class]);
+
         $userRepository = static::getContainer()->get(UserRepository::class);
 
-        $testUser = $userRepository->findOneByEmail('seb@seb.seb');
+        $testUser = $userRepository->findOneByEmail('user1@domain.fr');
 
         $this->client->loginUser($testUser);
 

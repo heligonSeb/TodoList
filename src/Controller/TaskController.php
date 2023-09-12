@@ -60,7 +60,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'La tâche %s a bien été modifiée');
+            $this->addFlash('success', sprintf('La tâche %s a bien été modifiée', $task->getTitle()));
 
             return $this->redirectToRoute('task_list');
         }

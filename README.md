@@ -1,5 +1,5 @@
 # ToDo & Co - todolist
-projet 8 openclassroom pour la formation développeur PHP Symfony
+project 8 openclassroom pour la formation développeur PHP Symfony
 
 ## Présentation
 Venant juste d'arriver dans une startup mon objectif est d'améliorer une application permettant de gérer ses tâches quotidiennes réalisé sous Symfony.

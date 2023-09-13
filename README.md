@@ -1,26 +1,26 @@
 # ToDo & Co - todolist
-project 8 openclassroom pour la formation développeur PHP Symfony
+project 8 openclassroom - développeur PHP Symfony
 
-## Présentation
-Venant juste d'arriver dans une startup mon objectif est d'améliorer une application permettant de gérer ses tâches quotidiennes réalisé sous Symfony.
-Mes objectifs consistent donc à améliorer :
-- la qualité du code
-- la qualité perçue par l'utilisateur
-- la qualité perçue par les collaborateurs
-- la qualité lorsqu'il vous faut travailler sur le projet
+## Presentation
+Having just arrived in a startup, my goal is to improve an application allowing you to manage your daily tasks using Symfony.
+My objectives consist of improving:
+- code quality
+- the quality perceived by the user
+- the quality perceived by employees
+- quality when work on the project
 
-Mais aussi :
-- L'implémentation de nouvelles fonctionnalités
-- La correction de quelques anomalies
-- L'implémentation de tests automatisés
-- Documentation technique
-- Documentation d'audit de qualité du code et performance de l'application
+But also :
+- Implementation of new features
+- Fixed some anomalies
+- Implementation of automated tests
+- Technical documentation
+- Code quality audit documentation and application performance
 
-## Installation du projet
-Dans un premier temps récupérer le projet sur git avec `git clone`
+## Install the project
+Firstly recover the project on git with `git clone`
 
 ### Composer
-Via composer, on va venir installer les dépendances du projet avec la commande 
+We will install the project dependencies with:
 ```shell
 composer install
 ```

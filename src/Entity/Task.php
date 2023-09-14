@@ -27,7 +27,7 @@ class Task
     private ?bool $isDone = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    private ?User $user = null;
+    private User $user;
 
     public function __construct()
     {
@@ -81,7 +81,7 @@ class Task
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }

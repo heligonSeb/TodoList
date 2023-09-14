@@ -25,31 +25,31 @@ We will install the project dependencies with:
 composer install
 ```
 
-### Configuration du fichier .env.local
-Pour utiliser une base de donnée il vous faudra configurer votre propre ficher `.env.local` avec vos propres informations.
-Vous pouvez prendre en exemple le ficher `.env` deja existant dans le projet
+### Configuration .env.local
+To use a database you will need to configure your own `.env.local` file with your own information.
+You can take as an example the `.env` file already existing in the project
 
-### Création de la base de donnée
+### Database creation
 ```shell
 php bin/console doctrine:database:create
 ```
 
-### Configuration de la base de données
+### Database configuration
 ```shell
 php bin/console doctrine:schema:update
 ```
 
-### Mise en place des données dans la base de donnée
+### Add data in the database
 ```shell
 php bin/console doctrine:fixtures:load
 ```
 
-## Début du projet
-Une fois les étapes précédentes finies, vous pouvez lancer le serveur avec la commande
+## Beginning the project
+Once the previous steps have been completed, you can launch the server with the command
 ```shell
 symfony server:start
 ```
 
-Une fois le serveur lancé vous pouvez accéder au projet avec l'adresse http://localhost:8000/
+Once the server is launched you can access the project with the link http://localhost:8000/
 
 

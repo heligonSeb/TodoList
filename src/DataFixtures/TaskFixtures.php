@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -14,10 +15,9 @@ class TaskFixtures extends Fixture
             $task = new Task();
             $task->setTitle("task$i");
             $task->setContent("content$i");
-            $task->setUser(null);
+            $task->setUser(new User(rand(0,2)));
             $manager->persist($task);
         }
-
 
         $manager->flush();
     }

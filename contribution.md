@@ -12,7 +12,12 @@ You can create issues on the project to list your tasks to do.
 
 ## Unit test implementation
 When developing your branch, you must set up unit tests via php-unit
-Make the code coverage rate at least 70% - https://symfony.com/doc/current/testing.html 
+Make the code coverage rate at least 70% - https://symfony.com/doc/current/testing.html
+
+You can use this commande for generate your test-coverage and read the file resultTest.txt
+```shell
+php bin/phpunit --coverage-html=tests/test-coverage >resultTest.txt
+```
 
 ## Create pull request
 Once the development of one of your branches is complete and one of your new features is complete.

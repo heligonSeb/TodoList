@@ -40,19 +40,6 @@ class UserFixtures extends Fixture
         $user->setUsername('anonyme');
         $manager->persist($user);
 
-/*
-        for($i = 0; $i < 10; $i++) {
-            $user = new User();
-
-            if ($i == 1) {
-                $user->setRoles(['ROLE_ADMIN']);
-            }
-
-            $user->setUsername("user$i");
-            $user->setEmail("user$i@domain.fr");
-            $user->setPassword($this->passwordHasherFactory->getPasswordHasher(User::class)->hash('password'));
-            $manager->persist($user);
-        }*/
 
         $manager->flush();
     }

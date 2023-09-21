@@ -35,10 +35,6 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
 
-            if (!$user) {
-                throw new \Exception("Vous devez être connecté pour créer une tache", 403);
-            }
-
             $task->setUser($user);
 
             $entityManager->persist($task);

@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class TasksVoter extends Voter
 {
-    const CREATE = 'CREATE';
     const EDIT = 'EDIT';
     const DELETE = 'DELETE';
 
@@ -22,7 +21,7 @@ class TasksVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!in_array($attribute, [self::CREATE, self::EDIT, self::DELETE])) {
+        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
 

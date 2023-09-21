@@ -1,0 +1,88 @@
+PHPUnit 9.6.11 by Sebastian Bergmann and contributors.
+
+Testing 
+.......................                                           23 / 23 (100%)
+
+Time: 00:12.182, Memory: 90.50 MB
+
+OK (23 tests, 93 assertions)
+
+Generating code coverage report in HTML format ... done [00:00.032]
+
+Remaining direct deprecation notices (45)
+
+  15x: Argument $class of Doctrine\Common\DataFixtures\AbstractFixture::getReference() will be mandatory in 2.0. (AbstractFixture.php:100 called by TaskFixtures.php:14, https://github.com/doctrine/data-fixtures/pull/409, package doctrine/data-fixtures)
+    3x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testDisplayDeleteTask from App\Tests\Controller
+    3x in TaskControllerTest::testToggleTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessDeleteTask from App\Tests\Controller
+
+  15x: Argument $class of Doctrine\Common\DataFixtures\ReferenceRepository::getReference() will be mandatory in 2.0. (ReferenceRepository.php:222 called by AbstractFixture.php:103, https://github.com/doctrine/data-fixtures/pull/409, package doctrine/data-fixtures)
+    3x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testDisplayDeleteTask from App\Tests\Controller
+    3x in TaskControllerTest::testToggleTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessDeleteTask from App\Tests\Controller
+
+  15x: Argument $class of Doctrine\Common\DataFixtures\ReferenceRepository::hasReference() will be mandatory in 2.0. (ReferenceRepository.php:274 called by ReferenceRepository.php:225, https://github.com/doctrine/data-fixtures/pull/409, package doctrine/data-fixtures)
+    3x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testDisplayDeleteTask from App\Tests\Controller
+    3x in TaskControllerTest::testToggleTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessDeleteTask from App\Tests\Controller
+
+Remaining indirect deprecation notices (110)
+
+  39x: Subscribing to onSchemaCreateTable events is deprecated. (AbstractPlatform.php:2141 called by AbstractPlatform.php:2056, https://github.com/doctrine/dbal/issues/5784, package doctrine/dbal)
+    3x in SecurityControllerTest::testSuccessfullLogin from App\Tests\Controller
+    3x in TaskControllerTest::testDisplayCreateTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessCreateTask from App\Tests\Controller
+    3x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    3x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    ...
+
+  18x: Nesting transactions without enabling savepoints is deprecated.
+Call Doctrine\DBAL\Connection::setNestTransactionsWithSavepoints(true) to enable savepoints. (Connection.php:1380 called by UnitOfWork.php:424, https://github.com/doctrine/dbal/pull/5383, package doctrine/dbal)
+    2x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    2x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    2x in TaskControllerTest::testDisplayDeleteTask from App\Tests\Controller
+    2x in TaskControllerTest::testToggleTask from App\Tests\Controller
+    2x in TaskControllerTest::testSuccessDeleteTask from App\Tests\Controller
+    ...
+
+  13x: Not configuring a schema manager factory is deprecated. Use Doctrine\DBAL\Schema\DefaultSchemaManagerFactory which is going to be the default in DBAL 4. (Connection.php:225 called by DriverManager.php:196, https://github.com/doctrine/dbal/issues/5812, package doctrine/dbal)
+    1x in SecurityControllerTest::testSuccessfullLogin from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    ...
+
+  13x: Public access to Connection::connect() is deprecated. (Connection.php:367 called by ORMDatabaseTool.php:180, https://github.com/doctrine/dbal/issues/4966, package doctrine/dbal)
+    1x in SecurityControllerTest::testSuccessfullLogin from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    ...
+
+  13x: Connection::getSchemaManager() is deprecated, use Connection::createSchemaManager() instead. (Connection.php:1698 called by ORMDatabaseTool.php:182, https://github.com/doctrine/dbal/issues/4515, package doctrine/dbal)
+    1x in SecurityControllerTest::testSuccessfullLogin from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    ...
+
+  13x: AbstractMySQLPlatform::getName() is deprecated. Identify platforms by their class. (AbstractMySQLPlatform.php:1212 called by AbstractDatabaseTool.php:198, https://github.com/doctrine/dbal/issues/4749, package doctrine/dbal)
+    1x in SecurityControllerTest::testSuccessfullLogin from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessCreateTask from App\Tests\Controller
+    1x in TaskControllerTest::testDisplayEditTask from App\Tests\Controller
+    1x in TaskControllerTest::testSuccessEditTask from App\Tests\Controller
+    ...
+
+  1x: The "Monolog\Logger" class is considered final. It may change without further notice as of its next major version. You should not extend it from "Symfony\Bridge\Monolog\Logger".
+    1x in DefaultControllerTest::setUp from App\Tests\Controller
+

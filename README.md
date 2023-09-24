@@ -1,4 +1,4 @@
-# ToDo & Co - todolist
+# ToDo&Co - todolist
 project 8 openclassroom - développeur PHP Symfony
 
 ## Presentation

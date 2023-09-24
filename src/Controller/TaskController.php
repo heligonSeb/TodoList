@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TaskController extends AbstractController
 {
-    #[Route('/tasks', name: 'task_list')]
+    #[Route('/tasks', name: 'task_list',  methods: ['GET'])]
     public function list(EntityManagerInterface $entityManager): Response
     {
         return $this->render('task/list.html.twig', [
@@ -24,7 +24,7 @@ class TaskController extends AbstractController
     /**
      * @throws \Exception
      */
-    #[Route('/tasks/create', name: 'task_create')]
+    #[Route('/tasks/create', name: 'task_create',  methods: ['GET', 'POST'])]
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $task = new Task();
@@ -51,12 +51,10 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/tasks/{id}/edit', name: 'task_edit')]
+    #[Route('/tasks/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
     #[isGranted('EDIT', 'task', "La task n'a pas été trouvée", 404)]
     public function edit(Task $task, EntityManagerInterface $entityManager, Request $request): Response
     {
-        // $this->denyAccessUnlessGranted('EDIT', $task);
-
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -75,7 +73,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
+    #[Route('/tasks/{id}/toggle', name: 'task_toggle', methods: ['GET'])]
     public function toggleTask(Task $task, EntityManagerInterface $entityManager): Response
     {
         $task->toggle();
@@ -86,7 +84,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    #[Route('/tasks/{id}/delete', name: 'task_delete')]
+    #[Route('/tasks/{id}/delete', name: 'task_delete', methods: ['GET'])]
     #[isGranted('DELETE', 'task', "La task n'a pas été trouvée", 404)]
     public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
     {

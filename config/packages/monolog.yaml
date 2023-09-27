@@ -48,7 +48,6 @@ when@prod:
             nested:
                 type: stream
                 path: php://stderr
-                level: info
                 formatter: monolog.formatter.json
             console:
                 type: console

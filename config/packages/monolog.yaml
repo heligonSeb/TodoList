@@ -54,8 +54,10 @@ when@prod:
             console:
                 type: console
                 process_psr_3_messages: false
+                level: error
                 channels: ["!event", "!doctrine"]
             deprecation:
                 type: stream
                 channels: [deprecation]
+                level: error
                 path: php://stderr

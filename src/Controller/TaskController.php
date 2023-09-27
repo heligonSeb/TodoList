@@ -21,9 +21,6 @@ class TaskController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws \Exception
-     */
     #[Route('/tasks/create', name: 'task_create',  methods: ['GET', 'POST'])]
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {

@@ -26,6 +26,11 @@ class UserControllerTest extends WebTestCase
 
     public function testDisplayUser(): void
     {
+        $this->databaseTool->loadFixtures([UserFixtures::class]);
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.admin');
+
+        $this->client->loginUser($testUser);
         
         $this->client->request('GET', '/users');
 
@@ -36,6 +41,12 @@ class UserControllerTest extends WebTestCase
 
     public function testDisplayCreateUser(): void
     {
+        $this->databaseTool->loadFixtures([UserFixtures::class]);
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.admin');
+
+        $this->client->loginUser($testUser);
+
         $this->client->request('GET', '/users/create');
 
         $this->assertResponseIsSuccessful();
@@ -44,7 +55,13 @@ class UserControllerTest extends WebTestCase
     }
 
     public function testSuccessCreateUser(): void
-    {     
+    {
+        $this->databaseTool->loadFixtures([UserFixtures::class]);
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.admin');
+
+        $this->client->loginUser($testUser);
+
         $crawler = $this->client->request('GET', '/users/create');
 
         $form = $crawler->selectButton('Ajouter')->form([
@@ -63,6 +80,11 @@ class UserControllerTest extends WebTestCase
     public function testDisplayEditUser(): void
     {
         $this->databaseTool->loadFixtures([UserFixtures::class]);
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.admin');
+
+        $this->client->loginUser($testUser);
         
         $this->client->request('GET', '/users/1/edit');
 
@@ -74,6 +96,11 @@ class UserControllerTest extends WebTestCase
     public function testSuccessEditUser(): void
     {
         $this->databaseTool->loadFixtures([UserFixtures::class]);
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.admin');
+
+        $this->client->loginUser($testUser);
 
         $crawler = $this->client->request('GET', '/users/2/edit');
         

@@ -9,11 +9,10 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class TasksVoter extends Voter
 {
-    const VIEW = 'VIEW';
     const EDIT = 'EDIT';
     const DELETE = 'DELETE';
 
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {
@@ -22,7 +21,7 @@ class TasksVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if (!in_array($attribute, [self::VIEW, self::EDIT, self::DELETE])) {
+        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
 
@@ -47,24 +46,10 @@ class TasksVoter extends Voter
         $task = $subject;
 
         return match($attribute) {
-            self::VIEW => $this->canView($task, $user),
             self::EDIT => $this->canEdit($task, $user),
             self::DELETE => $this->canDelete($task, $user),
             default => throw new \LogicException('Ce code ne doit pas être atteint')
         };
-    }
-
-
-    private function canView(Task $task, User $user): bool
-    {
-        if ($task->getUser() === $user) {
-            return true;
-        }
-
-        if ($task->getUser()->getUsername() === 'anonyme' && $this->security->isGranted('ROLE_ADMIN')) {
-            return true;
-        }
-        return false;
     }
 
     private function canEdit(Task $task, User $user): bool

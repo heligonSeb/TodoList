@@ -1,55 +1,55 @@
-# ToDo & Co - todolist
-projet 8 openclassroom pour la formation développeur PHP Symfony
+# ToDo&Co - todolist
+project 8 openclassroom - développeur PHP Symfony
 
-## Présentation
-Venant juste d'arriver dans une startup mon objectif est d'améliorer une application permettant de gérer ses tâches quotidiennes réalisé sous Symfony.
-Mes objectifs consistent donc à améliorer :
-- la qualité du code
-- la qualité perçue par l'utilisateur
-- la qualité perçue par les collaborateurs
-- la qualité lorsqu'il vous faut travailler sur le projet
+## Presentation
+Having just arrived in a startup, my goal is to improve an application allowing you to manage your daily tasks using Symfony.
+My objectives consist of improving:
+- code quality
+- the quality perceived by the user
+- the quality perceived by employees
+- quality when work on the project
 
-Mais aussi :
-- L'implémentation de nouvelles fonctionnalités
-- La correction de quelques anomalies
-- L'implémentation de tests automatisés
-- Documentation technique
-- Documentation d'audit de qualité du code et performance de l'application
+But also :
+- Implementation of new features
+- Fixed some anomalies
+- Implementation of automated tests
+- Technical documentation
+- Code quality audit documentation and application performance
 
-## Installation du projet
-Dans un premier temps récupérer le projet sur git avec `git clone`
+## Install the project
+Firstly recover the project on git with `git clone`
 
 ### Composer
-Via composer, on va venir installer les dépendances du projet avec la commande 
+We will install the project dependencies with:
 ```shell
 composer install
 ```
 
-### Configuration du fichier .env.local
-Pour utiliser une base de donnée il vous faudra configurer votre propre ficher `.env.local` avec vos propres informations.
-Vous pouvez prendre en exemple le ficher `.env` deja existant dans le projet
+### Configuration .env.local
+To use a database you will need to configure your own `.env.local` file with your own information.
+You can take as an example the `.env` file already existing in the project
 
-### Création de la base de donnée
+### Database creation
 ```shell
 php bin/console doctrine:database:create
 ```
 
-### Configuration de la base de données
+### Database configuration
 ```shell
 php bin/console doctrine:schema:update
 ```
 
-### Mise en place des données dans la base de donnée
+### Add data in the database
 ```shell
 php bin/console doctrine:fixtures:load
 ```
 
-## Début du projet
-Une fois les étapes précédentes finies, vous pouvez lancer le serveur avec la commande
+## Beginning the project
+Once the previous steps have been completed, you can launch the server with the command
 ```shell
 symfony server:start
 ```
 
-Une fois le serveur lancé vous pouvez accéder au projet avec l'adresse http://localhost:8000/
+Once the server is launched you can access the project with the link http://localhost:8000/
 
 

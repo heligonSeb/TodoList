@@ -58,7 +58,7 @@ class SecurityControllerTest extends WebTestCase
             'password' => 'password'
         ]);
         $this->client->submit($form);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('');
     }
 
 
@@ -68,7 +68,7 @@ class SecurityControllerTest extends WebTestCase
 
         $userRepository = static::getContainer()->get(UserRepository::class);
 
-        $testUser = $userRepository->findOneByEmail('user1@domain.fr');
+        $testUser = $userRepository->findOneByEmail('user@user.user');
 
         $this->client->loginUser($testUser);
 

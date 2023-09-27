@@ -24,6 +24,8 @@ class UserFixtures extends Fixture
         $user->setUsername('user');
         $manager->persist($user);
 
+        $this->addReference('user', $user);
+
         # ADMIN
         $user = new User();
         $user->setEmail("admin@admin.admin");
@@ -31,6 +33,8 @@ class UserFixtures extends Fixture
         $user->setPassword($this->passwordHasherFactory->getPasswordHasher(User::class)->hash('password'));
         $user->setUsername('admin');
         $manager->persist($user);
+
+        $this->addReference('admin', $user);
 
         # ANONYME
         $user = new User();
@@ -40,19 +44,8 @@ class UserFixtures extends Fixture
         $user->setUsername('anonyme');
         $manager->persist($user);
 
-/*
-        for($i = 0; $i < 10; $i++) {
-            $user = new User();
+        $this->addReference('anonyme', $user);
 
-            if ($i == 1) {
-                $user->setRoles(['ROLE_ADMIN']);
-            }
-
-            $user->setUsername("user$i");
-            $user->setEmail("user$i@domain.fr");
-            $user->setPassword($this->passwordHasherFactory->getPasswordHasher(User::class)->hash('password'));
-            $manager->persist($user);
-        }*/
 
         $manager->flush();
     }

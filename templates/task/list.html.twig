@@ -4,7 +4,9 @@
 
 {% block body %}
     <div class="d-flex justify-content-end mb-2">
-        <a href="{{ path('task_create') }}" class="btn btn-primary">Créer une tâche</a>
+        {% if app.user %}
+            <a href="{{ path('task_create') }}" class="btn btn-primary">Créer une tâche</a>
+        {% endif %}
     </div>
 
     <div class="row">

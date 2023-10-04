@@ -3,7 +3,7 @@
 ## Get the project
 Use the `git clone` command to get the project
 
-## Create new gir branch
+## Create new git branch
 To be able to contribute to the project without compromising the already existing and functional project, create a new branch with the name of the feature that you want to implement.
 Respect the principle of one feature = one branch. This will allow your development to be integrated more easily into the project, without waiting for all your new features.
 

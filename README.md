@@ -26,22 +26,22 @@ composer install
 ```
 
 ### Configuration .env.local
-To use a database you will need to configure your own `.env.local` file with your own information.
-You can take as an example the `.env` file already existing in the project
+The docker-compose environment does not require setting up a database. 
+If you want to use a database already installed on your machine, create an .env.local file containing the information to connect to the database
 
-### Database creation
+### Docker compose
 ```shell
-php bin/console doctrine:database:create
+docker-compose up
 ```
 
 ### Database configuration
 ```shell
-php bin/console doctrine:schema:update
+symfony console doctrine:migrations:migrate
 ```
 
 ### Add data in the database
 ```shell
-php bin/console doctrine:fixtures:load
+symfony console doctrine:fixtures:load
 ```
 
 ## Beginning the project
